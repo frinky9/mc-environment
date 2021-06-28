@@ -1,0 +1,21 @@
+version: "3.9"
+    
+services:
+  bedrock-connect:
+    image: frinky9/bedrockconnect
+    restart: unless-stopped
+    ports:
+      - 19132:19132/udp
+    
+  bedrock-server:
+    depends_on:
+      - bedrock-connect
+    image: itzg/minecraft-bedrock-server
+    # volumes:
+    #   - wordpress_data:/var/www/html
+    ports:
+      - 19232:19132/udp
+    restart: unless-stopped
+    environment:
+      EULA: "true"
+      GAMEMODE: "creative"
